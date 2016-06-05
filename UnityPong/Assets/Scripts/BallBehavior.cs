@@ -48,13 +48,22 @@ public class BallBehavior : MonoBehaviour {
 		else if (collission.gameObject.name == "Top") 
 		{
 			var left = _rigidbody.velocity.x < 0;
-			var direction = new Vector3(left ? -1f : 1f, _rigidbody.velocity.y, -1f);
+			var direction = new Vector3(left ? -1f : 1f, 0f, -1f);
 			_rigidbody.velocity = direction * _speed;
 		}
 		else if (collission.gameObject.name == "Bottom") 
 		{
 			var left = _rigidbody.velocity.x < 0;
-			var direction = new Vector3(left ? -1f : 1f, _rigidbody.velocity.y, 1f);
+			var direction = new Vector3(left ? -1f : 1f, 0f, 1f);
+			_rigidbody.velocity = direction * _speed;
+		}
+
+		PaddleBehavior paddle = collission.gameObject.GetComponent<PaddleBehavior>();
+
+		if (paddle != null) 
+		{
+			var bottom = _rigidbody.velocity.z < 0;
+			var direction = new Vector3(paddle._player == Player.First ? 1f : -1f, 0f, bottom ? -1 : 1f);
 			_rigidbody.velocity = direction * _speed;
 		}
 	}
